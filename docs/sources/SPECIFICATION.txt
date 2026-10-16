@@ -1,0 +1,1330 @@
+NEWSROOM 360
+Especificação Completa de Produto, UX e Arquitetura
+Plataforma de redação jornalística para pauta, apuração, produção, revisão, publicação e distribuição
+Tipo de documento
+PRD + Especificação Funcional + Arquitetura de Software
+Versão
+1.0
+Escopo
+Web/PWA, mobile responsivo, CMS editorial e integrações
+Público
+Produto, UX/UI, Front-end, Back-end, QA, DevOps, Segurança e Redação
+Documento de referência para construção de uma aplicação jornalística profissional, escalável e auditável.
+Resumo executivo
+Visão geral da solução e princípios que orientam a construção.
+A proposta é uma plataforma unificada para redações digitais capaz de acompanhar todo o ciclo de vida de uma notícia. O sistema deve reduzir retrabalho, dar visibilidade sobre o que está sendo produzido, impedir publicações indevidas, organizar fontes e evidências, preservar histórico, acelerar coberturas urgentes e fornecer dados de desempenho sem obrigar o jornalista a alternar entre diversas ferramentas.
+A aplicação deve funcionar como o “sistema operacional da redação”: o repórter enxerga sua pauta, coleta informações, registra fontes, salva documentos, escreve, colabora, solicita revisão e acompanha a publicação; o editor controla prioridades, qualidade e riscos; o editor-chefe aprova conteúdos sensíveis; a equipe de mídia organiza fotos, vídeos e direitos; e o administrador mantém usuários, integrações e regras de governança.
+Princípio central — A ferramenta não deve “escrever no lugar do jornalista”. Ela deve estruturar o processo editorial, reduzir tarefas mecânicas, preservar contexto e dar controle humano sobre qualquer automação.
+Objetivos de negócio
+Aumentar a velocidade entre a criação da pauta e a publicação sem reduzir qualidade editorial.
+Centralizar pauta, texto, fontes, arquivos, evidências, comunicação editorial, aprovações e histórico.
+Reduzir erros de publicação por meio de workflow, checklists, permissões e validações automáticas.
+Melhorar rastreabilidade: toda alteração relevante deve ter autor, data/hora, justificativa e versão.
+Permitir cobertura externa pelo navegador/mobile com experiência resiliente a conexão instável.
+Dar autonomia à redação para configurar editorias, templates, campos, níveis de aprovação e destinos de publicação.
+Transformar métricas pós-publicação em informação útil para decisões editoriais, sem incentivar somente métricas de vaidade.
+Princípios de produto
+Princípio
+Aplicação prática
+Velocidade com controle
+Atalhos, autosave, templates e colaboração, porém com bloqueios para etapas obrigatórias.
+Fonte única de verdade
+Pauta, matéria, mídia, fontes, comentários e aprovações vivem no mesmo contexto.
+Mobile first para campo
+Criar atualização, anexar mídia, gravar nota e enviar breaking news deve funcionar em telas pequenas.
+Auditabilidade
+Versões, eventos, publicação e mudanças de status nunca podem depender apenas de logs técnicos.
+Configurabilidade
+Workflows, papéis, editorias, tags, checklists e integrações variam entre redações.
+Acessibilidade
+Interface operável por teclado, leitores de tela, contraste adequado e sem dependência exclusiva de cor.
+Resiliência
+Autosave local, fila offline, upload retomável e recuperação de sessão são requisitos do produto.
+1. Escopo e mapa do produto
+A plataforma é dividida em módulos conectados por um mesmo modelo de permissões, notificações e histórico. A navegação principal deve refletir o trabalho real da redação, não a estrutura interna do software.
+Módulo
+Objetivo
+Usuários principais
+Dashboard
+Prioridades, prazos, alertas, tarefas e situação da redação.
+Todos
+Pautas
+Planejar cobertura, responsáveis, briefing, agenda e dependências.
+Repórter, editor, editor-chefe
+Apuração
+Organizar notas, fontes, entrevistas, documentos, evidências e checagem.
+Repórter, produtor, editor
+Redação
+Editor rico de matéria com colaboração, versões, blocos e metadados.
+Repórter, editor
+Revisão e aprovação
+Comentários, sugestões, checklist, jurídico e aceite editorial.
+Editor, editor-chefe, jurídico
+Mídia
+Fotos, vídeos, áudios, legendas, créditos, licenças e recortes.
+Foto/vídeo, repórter, editor
+Publicação
+Agendamento, preview, destinos, canonical, SEO e rollback.
+Editor, publicação
+Ao vivo / Breaking
+Cobertura contínua, flashes, timeline e alertas urgentes.
+Repórter, editor
+Fontes e contatos
+Cadastro protegido de fontes, relacionamento e histórico de uso.
+Repórter, editor
+Distribuição
+Social, push, newsletter, home, app e republicação.
+Social, editor
+Analytics
+Desempenho, retenção, origem, conversão e impacto editorial.
+Editor, gestão
+Administração
+Usuários, permissões, configurações, integrações e auditoria.
+Administrador
+2. Personas, papéis e permissões
+O sistema deve usar RBAC (Role-Based Access Control) combinado com permissões contextuais. Um “repórter” pode editar uma matéria da qual é responsável, mas não necessariamente pode publicar; um editor pode publicar em determinadas editorias; conteúdos sensíveis podem exigir aprovação adicional independente do papel.
+Papel
+Pode fazer
+Restrições recomendadas
+Repórter
+Criar/receber pautas; apurar; escrever; anexar mídia; sugerir publicação.
+Não publica diretamente, salvo regra específica.
+Produtor
+Criar pautas, agenda, contatos, documentos e tarefas de produção.
+Pode não editar texto final.
+Editor
+Distribuir pautas; revisar; solicitar ajustes; aprovar; publicar dentro do seu escopo.
+Permissão por editoria/canal.
+Editor-chefe
+Visão global, aprovação de risco, override controlado e gestão de prioridade.
+Ações críticas sempre auditadas.
+Foto/Vídeo
+Upload, edição de metadados, direitos, legendas, thumbnails e seleção.
+Sem alterar conteúdo textual, salvo legenda.
+Social
+Preparar variações de chamadas e distribuição social.
+Sem modificar corpo publicado sem fluxo editorial.
+Jurídico/Compliance
+Revisão de risco, observações e aprovação quando acionado.
+Acesso somente aos conteúdos submetidos.
+Colunista/Freelancer
+Produção limitada a pautas/matérias atribuídas.
+Sem acesso amplo a fontes, analytics ou administração.
+Administrador
+Usuários, papéis, integrações, templates, campos, segurança e configurações.
+Não deve possuir automaticamente poder editorial.
+Leitor executivo
+Dashboard e analytics em modo leitura.
+Sem edição.
+2.1 Matriz de permissões de referência
+Ação
+Repórter
+Produtor
+Editor
+Editor-chefe
+Mídia
+Admin
+Jurídico
+Criar pauta
+Sim
+Sim
+Sim
+Sim
+Não
+Não
+Não
+Editar pauta atribuída
+Sim
+Sim
+Sim
+Sim
+Não
+Não
+Não
+Editar qualquer matéria
+Não
+Não
+Sim
+Sim
+Não
+Não
+Não
+Publicar
+Não*
+Não
+Sim*
+Sim
+Não
+Não
+Não
+Despublicar
+Não
+Não
+Sim*
+Sim
+Não
+Não
+Não
+Aprovar risco jurídico
+Não
+Não
+Não
+Sim
+Não
+Não
+Sim
+Gerenciar mídia
+Sim
+Sim
+Sim
+Sim
+Sim
+Não
+Não
+Gerenciar usuários
+Não
+Não
+Não
+Não
+Não
+Sim
+Não
+Ver auditoria global
+Não
+Não
+Parcial
+Sim
+Não
+Sim
+Parcial
+Regra de segurança — “Administrador técnico” e “autoridade editorial” devem ser papéis separados. O acesso à configuração do sistema não deve conceder automaticamente capacidade de publicar ou apagar conteúdo.
+3. Arquitetura geral da solução
+A arquitetura recomendada separa experiência, API de composição, serviços de domínio, infraestrutura de dados e canais de distribuição. O objetivo é permitir que o front-end evolua com rapidez sem acoplar regras editoriais críticas à interface.
+3.1 Componentes lógicos
+Camada
+Responsabilidade
+Observações
+Web/PWA
+Experiência principal de redação.
+SSR/SPA híbrido, autosave, offline parcial, atalhos, responsivo.
+BFF/API Gateway
+Sessão, autorização, agregação, validações de entrada e contratos para o front.
+Evita chamadas fragmentadas e centraliza políticas de acesso.
+Serviço de Conteúdo
+Matérias, blocos, versões, metadados, status e publicação.
+Regras editoriais ficam no domínio, não no componente React.
+Serviço de Pautas
+Agenda, briefing, responsáveis, prazos, dependências e tarefas.
+Suporta calendário e kanban.
+Serviço de Workflow
+Estados, transições, aprovações, checklists, SLA e automações.
+Configurável por organização/editoria.
+Serviço de Mídia
+Upload, transformação, metadados, direitos e armazenamento.
+URLs assinadas e upload multipart/retomável.
+Busca
+Indexação de pautas, matérias, tags, fontes e documentos autorizados.
+Elasticsearch/OpenSearch ou equivalente.
+Realtime
+Presença, cursores, comentários, atualizações e notificações.
+WebSocket/SSE conforme caso.
+Fila/Eventos
+Processamento assíncrono, publicação, geração de derivados e distribuição.
+Kafka/RabbitMQ/SQS ou equivalente.
+Observabilidade
+Logs, métricas, traces, erros de front e auditoria.
+Auditoria editorial é separada de log técnico.
+4. Arquitetura front-end
+A referência abaixo utiliza React + Next.js + TypeScript por maturidade do ecossistema, renderização híbrida e organização de rotas. A mesma separação conceitual pode ser implementada em Vue/Nuxt, Angular ou outra stack, desde que preserve domínios, contratos e fronteiras de responsabilidade.
+4.1 Stack de referência
+Categoria
+Sugestão
+Motivo
+Framework
+Next.js + React + TypeScript
+Rotas, SSR, Server Components quando úteis, excelente ecossistema e tipagem.
+Design System
+Componentes próprios sobre primitives acessíveis
+Consistência, manutenção e acessibilidade.
+Estilo
+CSS Modules ou Tailwind com tokens
+Velocidade sem espalhar valores arbitrários.
+Server State
+TanStack Query
+Cache, invalidação, retry, optimistic updates e estado de rede.
+Estado local
+Zustand ou Context por domínio
+Evitar store global para tudo.
+Forms
+React Hook Form + schema validation
+Performance e validação consistente.
+Schemas
+Zod ou equivalente
+Contrato runtime compartilhável com API.
+Editor rico
+Tiptap/ProseMirror/Lexical
+Blocos extensíveis, colaboração e histórico.
+Realtime
+WebSocket/SSE + camada de presença
+Comentários, bloqueios, status e notificações.
+Testes
+Vitest/Jest + Testing Library + Playwright
+Unitário, integração e E2E.
+Observabilidade
+Sentry/OpenTelemetry web
+Erros, performance e contexto de sessão sem conteúdo sensível.
+Build/Quality
+ESLint + Prettier + TypeScript strict
+Barreira mínima para confiabilidade.
+4.2 Organização de pastas sugerida
+Estrutura — Separar por domínio reduz “componentes genéricos” que conhecem regras demais e facilita times paralelos.
+apps/web/app/ — rotas, layouts, páginas, boundaries e carregamento inicial
+src/features/stories/ — matéria, editor, metadados, preview e ações
+src/features/assignments/ — pauta, agenda, responsáveis, kanban e calendário
+src/features/sources/ — fontes, contatos, consentimentos e confidencialidade
+src/features/media/ — upload, biblioteca, crop, direitos, legendas e seleção
+src/features/workflow/ — status, transições, checklist, aprovação e SLA
+src/features/publishing/ — destinos, schedule, preview, rollback e distribuição
+src/features/analytics/ — painéis, métricas, filtros e exportação
+src/shared/ui/ — design system sem regra de negócio
+src/shared/api/ — cliente HTTP, interceptors, schemas e erros tipados
+src/shared/auth/ — sessão, guards, capabilities e escopo de editoria
+src/shared/realtime/ — presença, eventos, reconexão e sincronização
+src/shared/offline/ — IndexedDB, fila local e reconciliação
+src/shared/telemetry/ — logs de front, métricas de experiência e tracing
+4.3 Rotas principais
+Rota
+Tela
+/
+Dashboard pessoal
+/redacao
+Visão da redação / newsroom
+/pautas
+Lista e filtros de pautas
+/pautas/nova
+Criação guiada de pauta
+/pautas/[id]
+Workspace da pauta
+/materias
+Matérias por status
+/materias/[id]/editar
+Editor completo
+/materias/[id]/preview
+Preview por canal/dispositivo
+/ao-vivo/[id]
+Live blog / cobertura
+/midia
+Biblioteca de mídia
+/fontes
+Base de fontes autorizada
+/agenda
+Calendário editorial
+/aprovacoes
+Fila de revisão e aprovação
+/publicacoes
+Fila, agendadas e histórico
+/analytics
+Desempenho
+/admin
+Configurações e governança
+4.4 App Shell e navegação
+Sidebar recolhível com Dashboard, Pautas, Matérias, Agenda, Aprovações, Mídia, Fontes e Analytics; itens aparecem conforme capability.
+Barra superior com busca global, criação rápida, notificações, presença, status de conexão e menu do usuário.
+Command Palette (Ctrl/Cmd+K) para navegar, abrir matéria, criar pauta, mudar status e executar ações permitidas.
+Breadcrumbs persistentes em telas de contexto complexo.
+Painel lateral contextual (inspector) para metadados sem tirar o usuário do conteúdo principal.
+Modo concentração no editor para esconder navegação e reduzir distração.
+Indicador inequívoco de ambiente (produção/homologação) para evitar publicação acidental.
+4.5 Estado, cache e sincronização
+O front-end deve distinguir server state (dados de domínio vindos da API) de UI state (painéis, filtros locais, preferências). Matéria, pauta, comentários e permissões não devem existir como “verdade” somente em stores do navegador.
+Queries versionadas por chave: story(id), assignment(id), media(filters), approvals(queue).
+Optimistic update apenas para ações reversíveis e de baixo risco, como marcar tarefa; publicar, despublicar e aprovar exigem confirmação do servidor antes de atualizar a interface.
+Mutations devem carregar idempotency key para impedir duplicação em reconexões ou duplo clique.
+Eventos realtime invalidam ou atualizam seletivamente caches afetados.
+Modo offline mantém rascunhos e ações seguras em fila; transições editoriais críticas exigem conexão confirmada.
+Conflitos de edição devem apresentar comparação e opções claras, nunca sobrescrever silenciosamente.
+4.6 Tratamento de erros e estados vazios
+Erros de autorização: explicar a limitação e mostrar quem pode executar a ação.
+Falha de rede: preservar dados locais, informar status e oferecer retry sem perder conteúdo.
+Upload interrompido: retomar a partir do último bloco confirmado.
+Matéria bloqueada/arquivada: abrir em leitura com motivo e histórico.
+Estado vazio deve orientar ação (“Nenhuma pauta atribuída hoje”) em vez de tela branca.
+Erro inesperado deve possuir correlation ID para suporte, sem exibir stack trace.
+5. Design System, UX e responsividade
+5.1 Fundamentos
+Elemento
+Regra
+Grid
+Desktop 12 colunas; tablet 8; mobile 4. Conteúdo de leitura não deve ultrapassar largura confortável.
+Tipografia
+Hierarquia clara; texto editorial com alta legibilidade; números tabulares em analytics.
+Cores
+Tokens semânticos: info, success, warning, danger, neutral; status não depende somente de cor.
+Espaçamento
+Escala consistente de 4/8 px ou equivalente.
+Foco
+Indicador visível para teclado em todos os controles.
+Feedback
+Ação crítica sempre produz confirmação visual e registro.
+Densidade
+Modo confortável e modo compacto para mesas de edição.
+5.2 Componentes obrigatórios do Design System
+Button, IconButton, SplitButton, DropdownMenu, ContextMenu, Tooltip e Command Menu.
+Input, Textarea, Select, Combobox, MultiSelect, Date/Time Picker, Tag Input e Autosuggest.
+Dialog, Drawer, Popover, AlertDialog e Sheet para inspector.
+Table/DataGrid com ordenação, filtros, seleção, colunas configuráveis e virtualização.
+Tabs, Accordion, Breadcrumb, Pagination e Stepper.
+Badge, StatusPill, Avatar, PresenceDot, Skeleton, EmptyState, Toast e InlineAlert.
+FileUploader com drag-and-drop, progresso, retomada, preview e validação.
+RichTextToolbar e blocos editoriais.
+ActivityTimeline, CommentThread, VersionDiff e ApprovalCard.
+MetricCard, TimeSeriesChart, Funnel/Retention quando aplicável.
+5.3 Breakpoints e comportamento
+Faixa
+Comportamento
+≥ 1440 px
+Sidebar + conteúdo + inspector simultâneos; tabelas densas; previews lado a lado.
+1024–1439 px
+Sidebar recolhível; inspector em drawer; editor prioriza conteúdo.
+768–1023 px
+Navegação compacta; grids em 2 colunas; toolbar de editor agrupada.
+< 768 px
+Fluxos essenciais em coluna única; ações primárias fixas; tabelas viram cards/linhas expansíveis.
+6. Dashboard do jornalista
+A primeira tela deve responder rapidamente: “o que preciso fazer agora?”, “o que está atrasado?”, “o que mudou desde meu último acesso?” e “quais conteúdos aguardam minha ação?”.
+6.1 Blocos obrigatórios
+Minhas pautas de hoje: prioridade, editoria, prazo, status, responsável e última atividade.
+Próximos eventos: entrevistas, coletivas, agendas públicas e deadlines.
+Matérias em andamento: progresso, pendências e quem está editando.
+Aguardando retorno: fontes ou aprovações com prazo e lembrete.
+Solicitações de revisão: comentários e mudanças pedidas pelo editor.
+Breaking news: alertas de alta prioridade, cobertura ativa e canal responsável.
+Notificações relevantes agrupadas, evitando feed ruidoso.
+Atalhos configuráveis: nova pauta, nova matéria, upload, contato, live blog.
+6.2 Dashboard do editor
+Mapa da redação por status: não iniciada, apuração, redação, revisão, aprovada, agendada e publicada.
+Carga por repórter e capacidade da equipe.
+Pautas sem responsável, atrasadas ou sem atualização por período configurável.
+Fila de aprovação ordenada por prioridade editorial e horário planejado.
+Alertas de risco: ausência de fonte, direito de resposta pendente, mídia sem crédito, embargo, conteúdo sensível.
+Coberturas ao vivo e eventos críticos em andamento.
+7. Módulo de pautas e agenda editorial
+7.1 Campos de pauta
+Campo
+Obrigatoriedade
+Descrição
+Título interno
+Obrigatório
+Identificação rápida, não precisa ser o título publicado.
+Slug/ID
+Automático
+ID estável e pesquisável.
+Resumo/briefing
+Obrigatório
+O que aconteceu, por que importa e abordagem esperada.
+Editoria
+Obrigatório
+Escopo e regras de workflow.
+Tipo de conteúdo
+Obrigatório
+Notícia, entrevista, serviço, análise, coluna, live, vídeo etc.
+Prioridade
+Obrigatório
+Baixa, normal, alta, urgente/breaking.
+Responsáveis
+Obrigatório
+Repórter, editor, produtor e colaboradores.
+Prazo
+Obrigatório
+Data/hora editorial; pode diferir do agendamento.
+Evento/agenda
+Opcional
+Local, horário, acesso, link, credenciamento.
+Hipóteses/perguntas
+Recomendado
+O que a apuração precisa responder.
+Fontes planejadas
+Recomendado
+Pessoas, órgãos, bases e documentos.
+Contexto
+Opcional
+Links e conteúdos anteriores.
+Entregáveis
+Obrigatório
+Texto, foto, vídeo, reels, rádio, infográfico, live.
+Risco/sensibilidade
+Condicional
+Política, menores, saúde, crimes, acusações, judicialização etc.
+Embargo
+Condicional
+Data/hora e fonte do embargo.
+Tags internas
+Opcional
+Organização e busca.
+Checklist
+Configurável
+Tarefas mínimas por tipo de pauta.
+7.2 Visualizações
+Lista filtrável por status, editoria, pessoa, prioridade, prazo e texto livre.
+Kanban configurável por status editorial.
+Calendário diário/semanal/mensal, com drag-and-drop sujeito a validação.
+Timeline de coberturas especiais e séries.
+Visão “mesa de edição” com agrupamento por horário planejado.
+7.3 Regras importantes
+Duplicação de pauta deve alertar sobre matérias/pautas semanticamente semelhantes.
+Mudança de prazo ou prioridade pode exigir motivo e notificar responsáveis.
+Pauta cancelada não é apagada: recebe motivo e permanece no histórico.
+Pauta pode originar múltiplos conteúdos (texto + vídeo + social) vinculados ao mesmo contexto.
+Dependências explícitas: “aguarda entrevista”, “aguarda documento”, “aguarda jurídico”.
+8. Workspace de apuração
+A apuração não deve ficar fragmentada entre bloco de notas, mensageiros e pastas locais. O workspace reúne materiais de suporte sem misturá-los ao texto publicado.
+8.1 Notas e evidências
+Notas rápidas com timestamp e autor.
+Blocos estruturados: fato confirmado, hipótese, pergunta, citação, dado, pendência e alerta.
+Anexos: PDF, imagem, áudio, vídeo, planilha, link e captura de página, respeitando políticas internas.
+Marcação de confiabilidade/proveniência para dados e evidências.
+Ligação de um trecho de nota a uma fonte específica.
+Possibilidade de promover uma citação/nota para o editor da matéria mantendo referência de origem.
+8.2 Entrevistas
+Registro de data, formato, local, entrevistador e participantes.
+Upload de gravação e transcrição automática opcional, sempre revisável.
+Marcadores por timestamp para trechos importantes.
+Classificação de trechos como on the record, background, off the record ou restrito conforme política da redação.
+Exportação de citações selecionadas com contexto e tempo da gravação.
+Controle de consentimento quando aplicável.
+8.3 Checagem factual
+Checklist de fatos verificáveis extraídos do texto ou adicionados manualmente.
+Cada item pode ter status: pendente, confirmado, contestado, inconclusivo.
+Associar fonte/evidência a cada confirmação.
+Itens contestados bloqueiam aprovação se a regra editorial assim definir.
+Campo para direito de resposta: solicitado em, por qual canal, prazo dado e resposta recebida.
+9. Gestão de fontes e contatos
+Sensibilidade — A base de fontes pode conter dados pessoais e relações confidenciais. Deve existir acesso por escopo, criptografia e auditoria específica.
+9.1 Cadastro
+Nome, organização, cargo, temas, telefones/e-mails, localização geral e canais preferidos.
+Tags de especialidade e editorias relacionadas.
+Nível de sensibilidade/confidencialidade.
+Histórico de contato e de participação em matérias, respeitando permissão.
+Observações privadas com escopo de visibilidade.
+Consentimentos e restrições de contato quando pertinentes.
+Favoritos pessoais e listas compartilhadas.
+9.2 Proteções
+Não exibir telefone/e-mail em resultados de busca para quem não tem capability.
+Logar visualização e exportação de fontes marcadas como sensíveis.
+Bloquear exportação massiva por padrão.
+Permitir pseudônimo/identificador interno para fontes de alto risco.
+Aplicar políticas de retenção e exclusão definidas pela organização.
+10. Editor de matéria
+O editor é a área mais crítica da aplicação. Precisa ser rápido, previsível, recuperável e permitir que texto e metadados avancem de forma coordenada.
+10.1 Layout recomendado
+Centro: corpo da matéria e blocos editoriais.
+Topo: status, salvamento, presença, versão, responsável e ações principais.
+Esquerda opcional: outline/estrutura da matéria e navegação entre blocos.
+Direita: inspector com SEO, metadados, mídia, workflow, checklist e publicação.
+Rodapé/indicador persistente: status de salvamento e conexão.
+10.2 Blocos de conteúdo
+Bloco
+Requisitos
+Parágrafo
+Texto base com marks básicos.
+Título H2/H3
+Hierarquia semântica controlada.
+Citação
+Quote com autor/fonte e variante visual.
+Imagem
+Asset da biblioteca, legenda, crédito, alt text, crop/focal point.
+Galeria
+Sequência de imagens com metadados individuais.
+Vídeo
+Upload/URL, poster e legenda.
+Áudio
+Player e transcrição opcional.
+Embed
+Fornecedor permitido por whitelist.
+Tabela
+Dados tabulares responsivos.
+Lista
+Ordenada ou não ordenada.
+Box/serviço
+Informação de utilidade ou contexto.
+Timeline
+Eventos cronológicos.
+Related content
+Matérias relacionadas por seleção ou regra.
+CTA
+Newsletter, app, evento ou outro destino autorizado.
+Separador
+Divisão semântica.
+HTML restrito
+Somente perfis autorizados e sanitização forte.
+10.3 Recursos de edição
+Autosave frequente com confirmação visual e versão incremental.
+Undo/redo local sem quebrar sincronização remota.
+Colaboração com presença e, se necessário, edição simultânea por CRDT/OT.
+Comentários ancorados em trecho/bloco e threads resolvíveis.
+Modo sugestão para revisão textual, com aceitar/rejeitar alteração.
+Contagem de palavras/caracteres e estimativa de tempo de leitura.
+Atalhos de teclado documentados.
+Localizar/substituir; navegar por heading; checagem de links quebrados.
+Validação de estrutura: título ausente, heading fora de ordem, imagem sem alt, crédito faltante.
+Restauração automática após crash ou fechamento inesperado.
+10.4 Metadados editoriais
+Metadado
+Regra
+Título
+Obrigatório
+Linha fina/subtítulo
+Configurável
+Chapéu/kicker
+Opcional
+Slug
+Automático editável
+Autor(es)
+Obrigatório
+Editoria
+Obrigatório
+Tags
+Recomendado
+Localidade
+Opcional
+Data de publicação
+Automática/agendada
+Atualizado em
+Automático
+Imagem de capa
+Conforme template
+Legenda/crédito/alt
+Obrigatório quando há imagem
+Resumo SEO
+Obrigatório/assistido
+Título SEO
+Configurável
+Canonical
+Automático/override
+Robots
+Controlado
+Conteúdo patrocinado
+Flag + regras especiais
+Sensível
+Flag editorial
+Embargo
+Condicional
+11. Versionamento, colaboração e histórico
+11.1 Versões
+Checkpoint automático em intervalos e em transições de workflow.
+Checkpoint manual com rótulo opcional (“antes da revisão jurídica”).
+Diff visual por bloco e por texto.
+Restaurar versão cria nova versão; nunca apaga a linha histórica.
+Versões publicadas recebem marcação imutável e relacionam URL/publicação.
+11.2 Activity log editorial
+Criou pauta, atribuiu responsável, alterou prazo, anexou documento, mudou status, aprovou, rejeitou, publicou, atualizou, despublicou.
+Mostrar autor, timestamp, origem/dispositivo quando necessário e motivo para ações críticas.
+Filtros por tipo de evento e exportação restrita para auditoria.
+12. Workflow editorial e aprovações
+O workflow deve ser configurável. Uma notícia simples pode exigir somente revisão de editor; uma investigação pode exigir editor-chefe e jurídico. O front deve receber do servidor as transições permitidas para aquele conteúdo e usuário.
+Status
+Significado
+Rascunho
+Conteúdo ainda em produção.
+Em apuração
+Coleta de fatos/fontes em andamento.
+Em redação
+Texto sendo construído.
+Aguardando revisão
+Repórter concluiu e envia ao editor.
+Ajustes solicitados
+Retorna ao autor com comentários obrigatórios.
+Revisão jurídica
+Conteúdo sensível aguardando parecer.
+Aprovada
+Conteúdo editorialmente aprovado.
+Agendada
+Publicação programada.
+Publicada
+Disponível em canal de destino.
+Atualizada
+Nova versão publicada.
+Despublicada
+Retirada com motivo e histórico.
+Arquivada
+Encerrada sem publicação ou fora de uso.
+12.1 Guardas de transição
+Enviar para revisão exige campos obrigatórios e checklist mínimo concluído.
+Aprovar exige permissão no escopo da editoria e ausência de bloqueios.
+Publicar exige aprovação válida, metadados, mídia e validações do canal.
+Despublicar exige motivo; em conteúdo de alto impacto pode exigir aprovação dupla.
+Alterações substanciais depois de aprovado podem invalidar aprovação anterior conforme regra.
+Conteúdo patrocinado, menores, acusações ou temas configurados podem ativar etapas adicionais.
+13. Mídia: fotos, vídeos e áudios
+13.1 Biblioteca
+Busca por arquivo, legenda, crédito, autor, tags, data, pauta e matéria relacionada.
+Pastas/coleções lógicas sem duplicar arquivo físico.
+Detecção de duplicidade por hash/perceptual hash.
+Preview e informações técnicas (dimensão, duração, codec, tamanho).
+Metadados IPTC/EXIF importados quando seguros e úteis; remover geolocalização sensível na distribuição se necessário.
+13.2 Upload e processamento
+Upload multipart/retomável para arquivos grandes.
+Validação de MIME real, tamanho, extensão e malware scan.
+Geração assíncrona de thumbnails, transcodes e versões otimizadas.
+Focal point e recortes por proporção (16:9, 1:1, 4:5, 9:16 etc.).
+Manter original protegido e derivados versionados.
+13.3 Direitos e créditos
+Campo de crédito obrigatório conforme origem.
+Licença, agência, data de expiração e restrições territoriais/editoriais.
+Bloquear publicação de asset expirado ou sem direito confirmado, conforme política.
+Alertar quando um recorte ou transformação puder violar regra de uso.
+14. Breaking news, live blog e cobertura em tempo real
+14.1 Breaking news
+Fluxo de criação ultrarrápida com título interno, fato confirmado, fonte e prioridade.
+Banner de alerta no newsroom para evitar duplicação por múltiplos repórteres.
+Possibilidade de publicar nota inicial curta e evoluir a mesma URL com atualizações.
+Rótulo de “em atualização” e timestamps claros para o leitor.
+Aprovação simplificada configurável, nunca sem trilha de auditoria.
+14.2 Live blog
+Posts individuais com autor, horário, tipo (texto, imagem, vídeo, citação, placar, dado).
+Fixar atualização importante; ordenar cronologicamente; corrigir preservando histórico.
+Modo moderador: repórteres submetem atualizações e editor aprova.
+Preview da timeline pública e possibilidade de encerrar cobertura.
+Distribuir itens selecionados para push/social.
+15. Publicação e CMS
+15.1 Preview
+Preview fiel do site em desktop, tablet e mobile.
+Preview por template/editoria e tema claro/escuro quando existir.
+URL de preview assinada e temporária para revisão externa autorizada.
+Checagem de embeds, imagens, related e anúncios/slots antes da publicação.
+15.2 Destinos de publicação
+Destino
+Controles necessários
+Site
+Template, editoria, home/posição, canonical, SEO, related, paywall se houver.
+App
+Seções, destaque, deeplink, push associado.
+AMP/alternativo
+Somente se estratégia exigir; validar compatibilidade de blocos.
+Parceiros/Syndication
+Feed/API, direitos, janela de publicação e campos específicos.
+Rádio/TV interno
+Exportação de roteiro/resumo e ativos, quando aplicável.
+15.3 Agendamento, atualização e rollback
+Agendar por timezone explícito da organização.
+Fila de publicação com status: pendente, processando, concluída, falhou, parcialmente distribuída.
+Retry idempotente e reconciliação automática.
+Atualização de matéria publicada cria nova versão; campos alterados e horário de atualização ficam claros.
+Rollback restaura uma versão como nova publicação, sem apagar versões intermediárias.
+Despublicação deve tratar cache/CDN, busca, app e integrações derivadas.
+16. SEO, descoberta e qualidade de publicação
+16.1 Checklist SEO
+Título SEO com comprimento orientativo e preview.
+Meta description/resumo.
+Slug limpo e estável, com redirecionamento quando alterado após publicação.
+Canonical e robots controlados por regra.
+Open Graph/Twitter cards e imagem adequada.
+Dados estruturados (NewsArticle/Article e outros quando cabíveis).
+Heading hierarchy, alt text e links internos.
+Sitemap/news sitemap e feeds gerados no backend/publicação.
+16.2 Validações automáticas
+Título/linha fina idênticos quando isso for indesejado.
+Link quebrado ou apontando para domínio suspeito.
+Imagem de baixa resolução para posição de destaque.
+Bloco incompatível com canal de destino.
+Ausência de crédito/alt/legenda conforme regra.
+Uso excessivo de caixa alta ou caracteres inválidos no slug.
+Conteúdo muito semelhante a publicação existente: alerta, não bloqueio automático sem política.
+17. Distribuição: home, social, push e newsletter
+17.1 Home e vitrines
+Selecionar destaque, posição, duração e imagem específica de vitrine.
+Fila editorial com conflitos de horário e histórico de quem alterou posição.
+Expiração automática do destaque, sem despublicar a matéria.
+Preview da home por dispositivo antes de aplicar.
+17.2 Social
+Variações de texto por rede e canal.
+Preview de card, mídia e link.
+UTMs padronizadas e rastreáveis.
+Agendamento e aprovação opcional.
+Integrações devem usar contas corporativas e tokens seguros; nunca credenciais compartilhadas no front.
+17.3 Push
+Título curto, mensagem, deeplink, segmento e prioridade.
+Preview e contagem de caracteres.
+Rate limit editorial e janela silenciosa configurável.
+Dupla confirmação para push de grande audiência, se definido pela organização.
+Métricas de entrega, abertura e navegação subsequente.
+17.4 Newsletter
+Selecionar matérias e ordenar blocos.
+Preview desktop/mobile e dark mode de e-mail quando possível.
+Test send para lista interna.
+Aprovação e agendamento.
+UTM automática e métricas de envio/abertura/clique conforme integração.
+18. Busca global e recuperação de informação
+A busca é ferramenta editorial, não apenas navegação. Deve recuperar rapidamente conteúdo passado, pautas em andamento, fontes autorizadas e mídia relevante.
+Pesquisa por texto com tolerância a erros e acentos.
+Filtros por tipo, data, editoria, autor, status, tags e confidencialidade.
+Operadores avançados opcionais para usuários experientes.
+Resultados agrupados por domínio: matérias, pautas, fontes, mídia, documentos.
+Permissões aplicadas no índice e no resultado final; nunca retornar snippet de conteúdo sem acesso.
+Saved searches para coberturas recorrentes e monitoramento interno.
+19. Notificações, tarefas e comunicação
+19.1 Eventos notificáveis
+Pauta atribuída, prazo alterado, comentário/mensão, revisão solicitada, aprovação/rejeição, publicação/falha, upload processado, resposta recebida, alerta de embargo, conflito de edição e tarefa vencida.
+Preferências por canal: in-app, e-mail, push corporativo e mensageiro integrado, quando permitido.
+Digest para eventos não urgentes; breaking e bloqueios podem ser imediatos.
+Mencionar @pessoa ou @grupo respeitando acesso ao conteúdo.
+19.2 Tarefas
+Tarefa vinculada a pauta/matéria, com responsável, prazo, prioridade e checklist.
+Dependências entre tarefas e status.
+Modelos por tipo de cobertura: entrevista, coletiva, investigação, evento ao vivo.
+20. Analytics editorial
+Cuidado editorial — Métricas devem apoiar decisões, não virar ranking simplista de jornalistas por pageviews. O sistema deve permitir contexto de formato, missão editorial e distribuição.
+20.1 Métricas
+Usuários, sessões/visitas, visualizações, visitantes recorrentes e origem de tráfego.
+Engajamento: tempo ativo, scroll, profundidade, retorno, shares e comentários quando houver.
+Desempenho por matéria, editoria, autor, formato e série.
+Conversão: newsletter, cadastro, assinatura ou outro objetivo do veículo.
+Distribuição: home, busca, social, direct, push, newsletter, parceiros.
+Tempo de produção: pauta → revisão → publicação, com gargalos por etapa.
+Taxa de correção/rollback e falhas de publicação como indicadores operacionais.
+20.2 Dashboard pós-publicação
+Comparar desempenho com baseline de conteúdos semelhantes, não só média geral.
+Janela de 15 min/1 h/24 h/7 dias conforme canal.
+Alertas de crescimento anormal, queda de tráfego ou erro técnico.
+Anotações editoriais para explicar eventos externos e mudanças de destaque.
+21. Correções, transparência e direito de resposta
+21.1 Correção
+Solicitação de correção com motivo, solicitante e evidência.
+Classificação: erro factual, atualização, ortografia, legal, privacidade, outro.
+Correções substanciais exigem nota de correção e, conforme política, nova aprovação.
+Preservar versão anterior internamente e registrar quem aprovou a alteração.
+Propagar atualização para cache, busca, app e parceiros.
+21.2 Direito de resposta
+Registrar pedido, prazo legal/editorial, responsável e status.
+Vincular comunicação e documentos ao conteúdo afetado.
+Marcar trecho/alegação relacionada para revisão rápida.
+22. Segurança, autenticação e governança
+22.1 Autenticação
+SSO OIDC/SAML quando disponível; MFA obrigatório para perfis privilegiados.
+Sessões curtas com refresh seguro; revogação imediata e painel de sessões ativas.
+Proteção contra brute force, credential stuffing e enumeração de usuários.
+Step-up authentication para ações críticas como despublicar ou alterar integrações.
+22.2 Autorização
+RBAC + escopo por editoria + regras por conteúdo + capability específica.
+Backend é autoridade; o front esconde/desabilita ações apenas como UX.
+Permissões retornadas como capabilities calculadas para o recurso atual.
+Toda operação sensível validada novamente no servidor.
+22.3 Proteções de aplicação
+CSP rigorosa; sanitização de HTML; proteção XSS/CSRF/SSRF conforme arquitetura.
+Uploads validados, escaneados e armazenados fora da árvore executável.
+URLs assinadas para mídia privada e previews.
+Rate limiting e detecção de abuso em endpoints críticos.
+Segredos somente no backend/secret manager; nunca em bundle do front.
+Dependências com SCA, patches e política de vulnerabilidade.
+23. Privacidade, LGPD e retenção
+Inventário de dados pessoais processados: usuários internos, fontes, contatos, entrevistados e analytics.
+Base legal e finalidade registradas conforme operação do veículo.
+Minimização: não coletar dados pessoais “por conveniência”.
+Retenção configurável por categoria de dado e obrigação legal/editorial.
+Exportação e exclusão controladas; conteúdo jornalístico pode possuir regras e exceções distintas de cadastro comum.
+Criptografia em trânsito e em repouso para dados sensíveis.
+Backups com política de retenção e procedimento de restauração testado.
+Acesso a dados sensíveis registrado e revisável.
+24. Recursos de IA e automação — opcionais e controlados
+Automação pode ajudar em tarefas mecânicas e de apoio, mas nunca deve publicar conteúdo, inventar fontes ou modificar fatos sem ação explícita de um usuário autorizado.
+24.1 Casos de uso seguros
+Transcrição de entrevista com marcação de baixa confiança.
+Resumo de documentos para triagem, preservando link ao original.
+Sugestões de título, linha fina, tags e descrição SEO.
+Detecção de campos faltantes, inconsistências e possíveis duplicidades.
+Extração de entidades, datas, números e afirmações para apoiar fact-checking.
+Sugestão de links internos a conteúdos anteriores.
+Geração de versões de chamada para redes sociais, sujeitas à revisão.
+24.2 Controles obrigatórios
+Toda saída é sugestão e precisa ser identificada como gerada/assistida.
+Nenhuma citação atribuída deve ser inventada ou reescrita como se fosse literal.
+Conteúdo confidencial só pode ser enviado a provedores autorizados pela organização.
+Logs de uso de IA devem respeitar minimização de dados.
+Configuração por organização/editoria para desativar casos de uso específicos.
+25. PWA, mobilidade e modo offline
+25.1 Casos mobile prioritários
+Receber/aceitar pauta, consultar briefing e localização.
+Criar nota, foto, vídeo ou áudio e anexar imediatamente.
+Atualizar status, concluir tarefa e mencionar editor.
+Escrever/editar trechos curtos e breaking news.
+Acessar contatos necessários e documentos previamente sincronizados.
+25.2 Offline
+Rascunhos locais criptografados quando tecnicamente viável.
+Fila de operações seguras com status “aguardando sincronização”.
+Upload retomável quando a conexão retorna.
+Indicador sempre visível de offline/online e última sincronização.
+Publicação e aprovação final não devem ser simuladas offline; exigir confirmação do servidor.
+26. Acessibilidade
+WCAG 2.2 AA como meta de conformidade.
+Navegação completa por teclado e foco previsível.
+Labels e descrições para todos os campos; erros associados semanticamente.
+Contraste adequado e status não representado somente por cor.
+Editor rico compatível com tecnologias assistivas na medida suportada pelo framework escolhido.
+Tabelas com headers e estruturas responsivas; gráficos com resumo textual.
+Alt text como parte do workflow editorial, não campo opcional escondido.
+Testes manuais com leitores de tela em fluxos críticos.
+27. Backend, API e contratos de integração
+27.1 Estilo de API
+REST com OpenAPI é suficiente para a maioria dos domínios; GraphQL pode ser útil para telas altamente agregadas, mas aumenta complexidade de autorização e caching. Independentemente do estilo, o contrato deve ser tipado, versionado e gerar/validar clientes.
+27.2 Endpoints de referência
+Endpoint
+Função
+GET /v1/me
+Sessão, perfil e capabilities globais.
+GET /v1/dashboard
+Agregado do dashboard do usuário.
+GET /v1/assignments
+Lista paginada/filtrada de pautas.
+POST /v1/assignments
+Criar pauta.
+GET /v1/assignments/{id}
+Detalhe + capabilities contextuais.
+POST /v1/assignments/{id}/transition
+Transição de status.
+GET /v1/stories/{id}
+Matéria, blocos e metadados.
+PATCH /v1/stories/{id}
+Atualização versionada/optimistic concurrency.
+POST /v1/stories/{id}/submit-review
+Enviar para revisão.
+POST /v1/stories/{id}/approve
+Aprovar.
+POST /v1/stories/{id}/publish
+Publicar/agendar.
+POST /v1/stories/{id}/unpublish
+Despublicar com motivo.
+GET /v1/stories/{id}/versions
+Histórico de versões.
+POST /v1/media/uploads
+Iniciar upload multipart.
+POST /v1/media/{id}/complete
+Finalizar e iniciar processamento.
+GET /v1/search
+Busca global com escopo de permissão.
+GET /v1/notifications
+Notificações do usuário.
+POST /v1/comments
+Comentário ancorado.
+GET /v1/analytics/stories/{id}
+Métricas autorizadas da matéria.
+27.3 Concorrência e idempotência
+ETag/version number em recursos editáveis; PATCH deve falhar com conflito quando base estiver desatualizada.
+Idempotency-Key em publicação, despublicação, criação de pauta e operações de pagamento/integração se houver.
+Eventos de domínio com eventId único para consumers não duplicarem ações.
+Uploads usam uploadId e partes verificadas.
+28. Modelo de dados conceitual
+Entidade
+Responsabilidade
+User
+Identidade interna, preferências e vínculo organizacional.
+Role/Permission
+Papéis, capabilities e escopos.
+Assignment
+Pauta e planejamento editorial.
+Story
+Unidade de conteúdo principal.
+StoryVersion
+Snapshot/versionamento da matéria.
+ContentBlock
+Blocos estruturados do corpo.
+WorkflowInstance
+Estado atual, transições e regras.
+Approval
+Decisão editorial/jurídica com autor e versão aprovada.
+Task
+Ação operacional vinculada.
+Source
+Fonte/contato com sensibilidade.
+Interview
+Entrevista e gravações/transcrições.
+Evidence
+Documento/link/dado que sustenta apuração.
+MediaAsset
+Arquivo original e metadados.
+MediaVariant
+Derivados/recortes/transcodes.
+CommentThread
+Discussão contextual.
+Publication
+Publicação por canal e versão.
+DistributionJob
+Social/push/newsletter/home.
+Correction
+Correção, motivo e aprovações.
+AuditEvent
+Evento de auditoria imutável.
+Notification
+Entrega de evento ao usuário.
+28.1 Relacionamentos essenciais
+Assignment 1:N Story — uma pauta pode produzir vários conteúdos.
+Story 1:N StoryVersion — cada checkpoint/publicação gera referência de versão.
+Story N:N MediaAsset — assets podem ser reutilizados conforme direitos.
+Story N:N Source/Evidence — vínculos de apuração internos, não necessariamente públicos.
+Story 1:N Publication — múltiplos canais/edições.
+Story 1:N Approval — aprovação deve indicar qual versão foi aprovada.
+AuditEvent referencia entidade, ação, ator, tempo e metadados mínimos.
+29. Realtime e colaboração
+Presença: quem está visualizando/editando a matéria.
+Comentários e menções em tempo real.
+Alteração de status refletida sem refresh.
+Fila de aprovação atualizada dinamicamente.
+Notificações in-app via canal persistente.
+Reconexão com last-event-id/sequence para não perder eventos.
+Se houver coedição simultânea, usar modelo apropriado (CRDT/OT) em vez de merges ad hoc.
+30. Observabilidade e auditoria
+30.1 Observabilidade técnica
+Frontend error tracking com release, rota, browser e correlation ID.
+Web Vitals e métricas de interação em fluxos críticos.
+Tracing distribuído do BFF até serviços críticos.
+Métricas: latência, erro, saturação, fila, upload, publicação e distribuição.
+Alertas com SLOs e runbooks.
+30.2 Auditoria editorial
+Log imutável e pesquisável separado de logs operacionais.
+Retenção conforme política e obrigação legal.
+Acesso restrito; exportação auditada.
+Eventos críticos devem incluir motivo e versão do conteúdo afetado.
+31. Performance e requisitos não funcionais
+Requisito
+Critério
+Disponibilidade
+Meta sugerida 99,9% para painel; publicar pode exigir SLO superior conforme operação.
+Tempo de resposta
+Interações comuns < 300 ms percebidos quando cacheadas; API p95 definida por endpoint.
+Editor
+Digitação nunca deve travar por chamadas de rede; autosave assíncrono.
+Busca
+Resultados iniciais em ~1 s para consultas normais.
+Upload
+Suporte a arquivos grandes com retomada e progresso.
+Escala
+Picos de breaking news não podem derrubar edição/publicação.
+RPO/RTO
+Definir por criticidade; testar restauração e contingência.
+Compatibilidade
+Últimas versões estáveis de Chrome/Edge/Firefox/Safari; política definida.
+Segurança
+Vulnerability management, pentest periódico e resposta a incidentes.
+Internacionalização
+Arquitetura pronta para locale/timezone mesmo se produto iniciar só em pt-BR.
+32. Testes e estratégia de qualidade
+32.1 Pirâmide de testes
+Unitários: validações, formatadores, reducers, regras de apresentação e utilitários.
+Componentes: forms, dialogs, editor blocks, permissions e estados de erro.
+Integração: API client + cache + componentes; contratos com mock server.
+E2E: pauta → matéria → revisão → aprovação → publicação; breaking; despublicação; correção.
+Acessibilidade automatizada + testes manuais.
+Performance para editor, listas e uploads.
+Segurança: authz, IDOR, XSS, upload, CSRF e regressões críticas.
+32.2 Cenários E2E mínimos
+Cenário
+Aceite
+Fluxo padrão
+Repórter recebe pauta, escreve, envia, editor solicita ajuste, repórter corrige, editor aprova e publica.
+Conflito de versão
+Dois usuários editam a partir de versões diferentes; nenhum dado é perdido silenciosamente.
+Falha de internet
+Rascunho preservado e sincronizado; usuário entende o que ficou pendente.
+Upload interrompido
+Retomada e processamento sem criar asset duplicado.
+Permissão
+Usuário sem capability não consegue publicar nem via chamada direta à API.
+Embargo
+Publicação antes do horário é bloqueada.
+Correção
+Alteração substancial gera nota/histórico conforme regra.
+Despublicação
+Remove de destinos e registra motivo.
+Mídia sem direito
+Publicação é impedida ou exige override autorizado.
+Breaking
+Nota inicial publicada rapidamente e atualizada na mesma URL com histórico.
+33. DevOps, ambientes e entrega
+Ambientes: desenvolvimento, preview por PR, homologação e produção.
+Feature flags para liberar módulos e fluxos por grupo/editoria.
+CI: lint, typecheck, testes, SCA, build, scans e policy checks.
+CD com canary/blue-green quando aplicável; rollback rápido.
+Migrações de banco versionadas e compatíveis com deploy progressivo.
+Configuração por ambiente via secret/config manager.
+Infraestrutura como código e trilha de mudanças.
+Backups, restore drill e plano de continuidade para publicação em contingência.
+33.1 Modo contingência
+Uma redação não pode depender de um único caminho para publicar breaking news. Deve existir plano de contingência controlado: canal alternativo de publicação, página de emergência ou procedimento manual documentado, com reconciliação posterior no CMS e auditoria.
+34. Administração e configurabilidade
+Usuários, grupos, papéis, editorias e capabilities.
+Templates de pauta e matéria.
+Workflows por editoria/tipo de conteúdo.
+Campos obrigatórios e checklists.
+Taxonomia: editorias, subeditorias, tags e séries.
+Destinos de publicação e integrações.
+Políticas de mídia e direitos.
+Configurações de notificação e SLA.
+Feature flags e experimentos.
+Retenção, exportação e auditoria.
+Branding básico e preferências da organização.
+35. Critérios de aceite por módulo
+Módulo
+Aceite mínimo
+Pauta
+Criar, atribuir, priorizar, agendar, anexar briefing, acompanhar atividade e cancelar com histórico.
+Editor
+Autosave confiável, recuperação, blocos, atalhos, comentários, versões, metadados e validações.
+Workflow
+Somente transições autorizadas; aprovações vinculadas à versão; bloqueios claros.
+Mídia
+Upload retomável, metadados, direitos, derivados e seleção no editor.
+Publicação
+Preview, agendamento, status, retry, update, rollback e despublicação auditável.
+Mobile
+Fluxos prioritários utilizáveis sem zoom horizontal ou controles inacessíveis.
+Busca
+Retorna somente conteúdo autorizado e oferece filtros úteis.
+Analytics
+Métricas contextualizadas e filtros por período/editoria/conteúdo.
+Admin
+Permissões e workflows configuráveis sem alteração de código para mudanças comuns.
+36. Roadmap de implementação
+Fase 1 — Núcleo editorial (MVP operacional)
+Autenticação, usuários, RBAC e editorias.
+Dashboard básico.
+Pautas, responsáveis, prazo e agenda.
+Editor de matéria com autosave, metadados e mídia básica.
+Workflow revisão/aprovação/publicação.
+Biblioteca de mídia e upload.
+Preview e publicação no site.
+Histórico mínimo e auditoria de ações críticas.
+Fase 2 — Colaboração e distribuição
+Comentários ancorados, presença e versões avançadas.
+Fontes e apuração estruturada.
+Social, push e newsletter.
+SEO avançado e validações.
+Busca global.
+PWA e offline parcial.
+Fase 3 — Operação avançada
+Live blog, breaking workflow e home curation.
+Analytics editorial e operacional.
+Jurídico/compliance configurável.
+Automação/IA assistiva.
+Integrações e syndication avançados.
+Workflows dinâmicos por risco e conteúdo.
+37. Backlog de histórias de usuário
+Persona
+História de usuário
+Repórter
+Quero ver minhas pautas e prazos ao entrar para priorizar meu dia.
+Repórter
+Quero registrar fonte, nota e documento dentro da pauta para não perder contexto.
+Repórter
+Quero continuar escrevendo quando a conexão oscilar sem perder texto.
+Repórter
+Quero enviar a matéria para revisão e saber exatamente o que falta.
+Editor
+Quero enxergar a carga da equipe e pautas atrasadas para redistribuir trabalho.
+Editor
+Quero comentar em um trecho e pedir ajuste sem conversar fora do sistema.
+Editor
+Quero saber quais fatos ainda estão pendentes de checagem antes de aprovar.
+Editor-chefe
+Quero que conteúdos de alto risco exijam minha aprovação antes de publicar.
+Mídia
+Quero impedir uso de foto sem crédito/licença para reduzir risco jurídico.
+Social
+Quero gerar versões de chamada a partir da matéria aprovada sem alterar o texto-base.
+Admin
+Quero mudar o workflow de uma editoria sem deploy de software.
+Gestão
+Quero medir gargalos do processo editorial e desempenho de conteúdo por contexto.
+38. Checklist de publicação recomendado
+Título e linha fina revisados.
+Fatos principais confirmados e evidências registradas.
+Nomes, cargos, datas, números e localidades conferidos.
+Direito de resposta tratado quando aplicável.
+Links checados.
+Imagem correta, com crédito, legenda e alt text.
+Conteúdo sensível sinalizado e revisado.
+Questões jurídicas/compliance concluídas quando acionadas.
+SEO: título, descrição, slug, canonical e OG válidos.
+Preview mobile/desktop verificado.
+Destino, editoria, horário e distribuição confirmados.
+Versão aprovada corresponde exatamente à versão que será publicada.
+39. O que não deve ser feito
+Permitir publicação apenas porque o botão está visível no front; autorização precisa existir no backend.
+Salvar texto somente no navegador sem estratégia de recuperação.
+Usar um único status “publicado/não publicado” para todo processo editorial.
+Misturar fontes confidenciais com dados públicos sem escopo de acesso.
+Permitir hard delete de matéria publicada sem trilha ou política específica.
+Guardar credenciais de redes sociais no front ou em variáveis públicas.
+Tornar IA requisito para escrever ou revisar conteúdo.
+Disparar push/social automaticamente ao publicar sem regras e confirmação.
+Usar pageviews isolados como ranking de qualidade de repórter.
+Desconsiderar funcionamento em conexão ruim e dispositivos móveis.
+40. Definição de pronto (Definition of Done)
+Requisito funcional implementado e validado contra critérios de aceite.
+Permissões verificadas no front e no backend.
+Estados loading/empty/error/offline implementados.
+Acessibilidade testada no fluxo alterado.
+Testes automatizados adequados incluídos.
+Telemetria/erros relevantes instrumentados.
+Documentação de API e configuração atualizada.
+Logs não expõem conteúdo sensível ou segredos.
+Performance aceitável e sem regressão observável.
+Feature flag/migração/rollback definidos quando necessário.
+UX revisada em desktop e mobile.
+41. Entrega recomendada para uma equipe de desenvolvimento
+Para transformar esta especificação em execução, o projeto deve gerar artefatos menores e rastreáveis. O documento atual funciona como referência macro; a implementação deve decompor cada módulo em épicos, histórias, contratos de API, wireframes e critérios de aceite testáveis.
+Artefato
+Conteúdo
+PRD por módulo
+Problema, persona, objetivos, requisitos, métricas, não-escopo.
+Fluxos UX
+Diagramas de jornada e estados de exceção.
+Wireframes/UI
+Desktop + mobile + empty/error/loading/offline.
+Contrato API
+OpenAPI/GraphQL schema, erros, auth e exemplos.
+Modelo de dados
+ERD e regras de retenção/índices.
+Threat model
+Ativos, ameaças, controles e abuso.
+Plano de testes
+Matriz por requisito e cenários críticos.
+Runbook
+Publicação, falha, rollback, contingência e incidentes.
+42. Conclusão
+Uma aplicação jornalística profissional precisa combinar velocidade, organização editorial, colaboração, rastreabilidade e segurança. O diferencial não está apenas no editor de texto: está na capacidade de conectar planejamento, apuração, evidências, revisão, direitos de mídia, aprovações, publicação, distribuição e métricas sob um único modelo de governança.
+A arquitetura proposta mantém as regras críticas no domínio/backend, enquanto o front-end oferece uma experiência rápida, responsiva e resiliente. Isso permite evoluir interfaces e canais sem comprometer autorização, auditoria e consistência editorial.
+Resultado esperado — Com esta base, uma equipe de produto e engenharia consegue decompor o sistema em módulos implementáveis, mantendo desde o início as decisões que evitam retrabalho: permissões, versionamento, workflow, mídia, offline, auditoria e publicação idempotente.
+Apêndice A — Inventário de telas
+Tela
+Função principal
+Login/SSO
+Autenticação e recuperação/step-up.
+Dashboard pessoal
+Minhas prioridades e pendências.
+Dashboard editor
+Visão da redação e gargalos.
+Lista de pautas
+Filtros, ordenação e ações em lote seguras.
+Nova pauta
+Wizard/formulário configurável.
+Workspace de pauta
+Briefing, notas, fontes, tarefas, mídia, atividade.
+Agenda
+Calendário editorial.
+Kanban
+Status de pautas/matérias.
+Lista de matérias
+Status, editoria, autor, prazo, publicação.
+Editor de matéria
+Conteúdo + inspector.
+Preview
+Visualização por canal/dispositivo.
+Versões
+Diff e restauração.
+Comentários
+Threads e menções.
+Fila de aprovação
+Revisão por prioridade/SLA.
+Biblioteca de mídia
+Busca, upload e metadados.
+Detalhe de asset
+Direitos, derivados, uso e histórico.
+Fontes
+Busca e cadastros autorizados.
+Detalhe de fonte
+Contato, histórico e confidencialidade.
+Live blog
+Timeline e moderação.
+Publicações
+Agendadas, concluídas, falhas e rollback.
+Distribuição
+Home/social/push/newsletter.
+Analytics
+Conteúdo e operação.
+Correções
+Solicitações, status e histórico.
+Notificações
+Central e preferências.
+Busca global
+Resultados multi-domínio.
+Admin usuários
+Perfis, grupos e escopos.
+Admin workflows
+Estados, transições e guardas.
+Admin taxonomia
+Editorias, tags e templates.
+Admin integrações
+Conectores, tokens, webhooks e status.
+Auditoria
+Eventos e filtros.
+Apêndice B — Eventos de domínio sugeridos
+Evento
+Uso
+assignment.created
+Auditoria, notificações, integrações e automações desacopladas.
+assignment.assigned
+Auditoria, notificações, integrações e automações desacopladas.
+assignment.deadline_changed
+Auditoria, notificações, integrações e automações desacopladas.
+assignment.cancelled
+Auditoria, notificações, integrações e automações desacopladas.
+story.created
+Auditoria, notificações, integrações e automações desacopladas.
+story.updated
+Auditoria, notificações, integrações e automações desacopladas.
+story.submitted_for_review
+Auditoria, notificações, integrações e automações desacopladas.
+story.changes_requested
+Auditoria, notificações, integrações e automações desacopladas.
+story.approved
+Auditoria, notificações, integrações e automações desacopladas.
+story.scheduled
+Auditoria, notificações, integrações e automações desacopladas.
+story.published
+Auditoria, notificações, integrações e automações desacopladas.
+story.updated_after_publish
+Auditoria, notificações, integrações e automações desacopladas.
+story.unpublished
+Auditoria, notificações, integrações e automações desacopladas.
+story.archived
+Auditoria, notificações, integrações e automações desacopladas.
+approval.requested
+Auditoria, notificações, integrações e automações desacopladas.
+approval.granted
+Auditoria, notificações, integrações e automações desacopladas.
+approval.rejected
+Auditoria, notificações, integrações e automações desacopladas.
+media.uploaded
+Auditoria, notificações, integrações e automações desacopladas.
+media.processed
+Auditoria, notificações, integrações e automações desacopladas.
+media.rights_expiring
+Auditoria, notificações, integrações e automações desacopladas.
+comment.created
+Auditoria, notificações, integrações e automações desacopladas.
+comment.mentioned
+Auditoria, notificações, integrações e automações desacopladas.
+correction.requested
+Auditoria, notificações, integrações e automações desacopladas.
+correction.approved
+Auditoria, notificações, integrações e automações desacopladas.
+distribution.started
+Auditoria, notificações, integrações e automações desacopladas.
+distribution.completed
+Auditoria, notificações, integrações e automações desacopladas.
+distribution.failed
+Auditoria, notificações, integrações e automações desacopladas.
+live.post_created
+Auditoria, notificações, integrações e automações desacopladas.
+notification.created
+Auditoria, notificações, integrações e automações desacopladas.
+Apêndice C — Prioridade MoSCoW
+Prioridade
+Escopo
+MUST
+Auth/RBAC; pautas; editor/autosave; workflow; mídia; preview/publicação; histórico; mobile responsivo.
+SHOULD
+Busca global; comentários ancorados; versões diff; fontes; SEO avançado; push/social; analytics básico.
+COULD
+Live blog avançado; IA assistiva; syndication; automações complexas; personalização profunda.
+WON’T agora
+Recursos não alinhados à operação inicial; manter explicitamente fora do MVP para evitar escopo infinito.

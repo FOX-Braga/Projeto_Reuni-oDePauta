@@ -1,0 +1,17 @@
+﻿Comando: npm install Exit code: -4058  npm.cmd : npm error code ENOENT
+No linha:2 caractere:313
++ ... e = $arguments -join '-'; $output = & npm.cmd @arguments 2>&1; $code  ...
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm error code ENOENT:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+npm error syscall open
+npm error path C:\Users\notel\Documents\GitHub\Projeto_ReuniãoDePauta\package.json
+npm error errno -4058
+npm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open 
+'C:\Users\notel\Documents\GitHub\Projeto_ReuniãoDePauta\package.json'
+npm error enoent This is related to npm not being able to find a file.
+npm error enoent
+npm error A complete log of this run can be found in: 
+C:\Users\notel\AppData\Local\Temp\newsroom360-npm-audit-cache\_logs\2026-10-16T12_57_52_206Z-debug-0.log
+
